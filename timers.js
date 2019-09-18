@@ -12,6 +12,7 @@ function Timeout (ms, fn, ctx) {
   this.ontimeout = fn
   this.context = ctx || null
   enroll(this, ms)
+  active(this)
 }
 
 Timeout.prototype._onTimeout = function () {
