@@ -3,4 +3,4 @@ clearTimeout(to)
 
 module.exports = to.refresh
   ? require('./refresh')
-  : require('./timers')
+  : process.versions.electron ? require('./browser') : require('./timers')
