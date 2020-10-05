@@ -50,4 +50,21 @@ function run (prefix, timeout) {
       }, 100)
     }, 500)
   })
+
+  tape(prefix + 'cannot be refreshed after call', function (t) {
+    t.plan(2)
+
+    var timedout = false
+
+    const to = timeout(50, function () {
+      t.notOk(timedout, 'did not already timeout')
+      t.pass('should be destroyed')
+      to.refresh()
+      timedout = true
+    })
+
+    setTimeout(function () {
+      t.end()
+    }, 500)
+  })
 }

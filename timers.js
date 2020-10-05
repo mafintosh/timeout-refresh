@@ -11,15 +11,18 @@ function Timeout (ms, fn, ctx) {
   this.ms = ms
   this.ontimeout = fn
   this.context = ctx || null
+  this.called = false
   enroll(this, ms)
   active(this)
 }
 
 Timeout.prototype._onTimeout = function () {
+  this.called = true
   this.ontimeout.call(this.context)
 }
 
 Timeout.prototype.refresh = function () {
+  if (this.called || this.ontimeout === null) return
   active(this)
 }
 
