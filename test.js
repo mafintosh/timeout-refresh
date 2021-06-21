@@ -1,69 +1,71 @@
 const tape = require('tape')
+const def = require('./index.js')
+const browser = require('./browser.js')
 
-run('', require('./'))
-run('browser: ', require('./browser'))
+run('', def)
+run('browser: ', browser)
 
-function run (prefix, timeout) {
-  tape(prefix + 'refresh', function (t) {
-    var refreshing = true
-    var timedout = false
+function run (prefix, Timeout) {
+  tape(`${prefix}refresh`, t => {
+    let refreshing = true
+    let timedOut = false
 
     const ctx = {}
-    const to = timeout(100, function () {
+    const to = new Timeout(100, function () {
       t.ok(ctx === this)
       t.ok(!refreshing)
-      timedout = true
+      timedOut = true
     }, ctx)
 
-    const i = setInterval(function () {
+    const i = setInterval(() => {
       to.refresh()
     }, 50)
 
-    setTimeout(function () {
+    setTimeout(() => {
       refreshing = false
       clearInterval(i)
-      setTimeout(function () {
-        t.ok(timedout)
+      setTimeout(() => {
+        t.ok(timedOut)
         t.end()
       }, 100)
     }, 500)
   })
 
-  tape(prefix + 'destroy', function (t) {
-    var timedout = false
+  tape(`${prefix}destroy`, t => {
+    let timedOut = false
 
-    const to = timeout(100, function () {
+    const to = new Timeout(100, () => {
       t.fail('should be destroyed')
-      timedout = true
+      timedOut = true
     })
 
-    const i = setInterval(function () {
+    const i = setInterval(() => {
       to.refresh()
     }, 50)
 
-    setTimeout(function () {
+    setTimeout(() => {
       clearInterval(i)
       to.destroy()
-      setTimeout(function () {
-        t.ok(!timedout)
+      setTimeout(() => {
+        t.ok(!timedOut)
         t.end()
       }, 100)
     }, 500)
   })
 
-  tape(prefix + 'cannot be refreshed after call', function (t) {
+  tape(`${prefix}cannot be refreshed after call`, t => {
     t.plan(2)
 
-    var timedout = false
+    let timedOut = false
 
-    const to = timeout(50, function () {
-      t.notOk(timedout, 'did not already timeout')
+    const to = new Timeout(50, () => {
+      t.notOk(timedOut, 'did not already timeout')
       t.pass('should be destroyed')
       to.refresh()
-      timedout = true
+      timedOut = true
     })
 
-    setTimeout(function () {
+    setTimeout(() => {
       t.end()
     }, 500)
   })

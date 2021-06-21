@@ -1,19 +1,19 @@
-const timeout = require('./')
+const Timeout = require('./index.js')
 
-const to = timeout(100, function () {
+const to = new Timeout(100, () => {
   console.log('Timed out!')
 })
 
-const i = setInterval(function () {
+const i = setInterval(() => {
   // refresh every 50ms
   to.refresh()
 }, 50)
 
-setTimeout(function () {
+setTimeout(() => {
   // cancel the refresh after 500ms
   clearInterval(i)
   console.log('Stopping refresh')
-  setTimeout(function () {
+  setTimeout(() => {
     console.log('Should have timed out now')
   }, 200)
 }, 500)

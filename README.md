@@ -12,9 +12,9 @@ In the browser a basic `clearTimeout + setTimeout` is used since no other method
 ## Usage
 
 ``` js
-const timeout = require('timeout-refresh')
+const Timeout = require('timeout-refresh')
 
-const to = timeout(100, function () {
+const to = new Timeout(100, function () {
   console.log('Timed out!')
 })
 
@@ -34,7 +34,7 @@ setTimeout(function () {
 
 ## API
 
-#### `to = timeout(ms, ontimeout, [context])`
+#### `to = new Timeout(ms, ontimeout, [context])`
 
 Make a new refreshable timeout.
 
