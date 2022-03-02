@@ -1,8 +1,8 @@
-module.exports = class TimerBrowser {
+module.exports = class Timer {
   constructor (ms, fn, ctx = null, interval = false) {
     this.ms = ms
     this.ontimeout = fn
-    this.context = ctx || null
+    this.context = ctx
     this.interval = interval
     this.done = false
 
@@ -20,21 +20,12 @@ module.exports = class TimerBrowser {
   }
 
   refresh () {
-    if (this.done) return
-
-    if (this.interval) {
-      clearInterval(this._timer)
-      this._timer = setInterval(callInterval, this.ms, this)
-    } else {
-      clearTimeout(this._timer)
-      this._timer = setTimeout(callTimeout, this.ms, this)
-    }
+    if (this.done !== true) this._timer.refresh()
   }
 
   destroy () {
     this.done = true
     this.ontimeout = null
-
     if (this.interval) clearInterval(this._timer)
     else clearTimeout(this._timer)
   }

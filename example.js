@@ -1,6 +1,6 @@
-const timeout = require('./')
+const Timeout = require('./')
 
-const to = timeout(100, function () {
+const to = Timeout.once(100, function () {
   console.log('Timed out!')
 })
 

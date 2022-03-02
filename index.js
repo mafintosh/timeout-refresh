@@ -1,6 +1,9 @@
-const to = setTimeout(function () {}, 1000)
-clearTimeout(to)
+module.exports = isNode()
+  ? require('./node')
+  : require('./browser')
 
-module.exports = to.refresh
-  ? require('./refresh')
-  : process.versions.electron ? require('./browser') : require('./timers')
+function isNode () {
+  const to = setTimeout(function () {}, 1000)
+  clearTimeout(to)
+  return !!to.refresh
+}

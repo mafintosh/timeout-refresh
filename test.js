@@ -3,13 +3,13 @@ const tape = require('tape')
 run('', require('./'))
 run('browser: ', require('./browser'))
 
-function run (prefix, timeout) {
+function run (prefix, Timeout) {
   tape(prefix + 'refresh', function (t) {
-    var refreshing = true
-    var timedout = false
+    let refreshing = true
+    let timedout = false
 
     const ctx = {}
-    const to = timeout(100, function () {
+    const to = Timeout.once(100, function () {
       t.ok(ctx === this)
       t.ok(!refreshing)
       timedout = true
@@ -30,9 +30,9 @@ function run (prefix, timeout) {
   })
 
   tape(prefix + 'destroy', function (t) {
-    var timedout = false
+    let timedout = false
 
-    const to = timeout(100, function () {
+    const to = Timeout.once(100, function () {
       t.fail('should be destroyed')
       timedout = true
     })
@@ -54,9 +54,9 @@ function run (prefix, timeout) {
   tape(prefix + 'cannot be refreshed after call', function (t) {
     t.plan(2)
 
-    var timedout = false
+    let timedout = false
 
-    const to = timeout(50, function () {
+    const to = Timeout.once(50, function () {
       t.notOk(timedout, 'did not already timeout')
       t.pass('should be destroyed')
       to.refresh()
@@ -66,5 +66,37 @@ function run (prefix, timeout) {
     setTimeout(function () {
       t.end()
     }, 500)
+  })
+
+  tape(prefix + 'setInterval', function (t) {
+    t.plan(1)
+
+    const actual = []
+    let tick = 0
+
+    const i = setInterval(function () {
+      tick++
+    }, 100)
+
+    const to = Timeout.on(500, function () {
+      actual.push(tick)
+
+      if (actual.length === 2) {
+        setTimeout(() => {
+          to.refresh()
+          setTimeout(() => {
+            to.refresh()
+          }, 250)
+        }, 250)
+      }
+
+      if (actual.length === 4) {
+        to.destroy()
+        clearInterval(i)
+
+        t.same(actual.map(n => Math.round(n / 5)), [1, 2, 4, 5])
+        t.end()
+      }
+    })
   })
 }

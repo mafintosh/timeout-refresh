@@ -6,15 +6,15 @@ Efficiently refresh a timer
 npm install timeout-refresh
 ```
 
-Uses `timeout.refresh` in Node 10 and `require('timers')` in older versions.
+Uses `timeout.refresh` in Node.
 In the browser a basic `clearTimeout + setTimeout` is used since no other method exists
 
 ## Usage
 
 ``` js
-const timeout = require('timeout-refresh')
+const Timeout = require('timeout-refresh')
 
-const to = timeout(100, function () {
+const to = Timeout.once(100, function () {
   console.log('Timed out!')
 })
 
@@ -34,11 +34,25 @@ setTimeout(function () {
 
 ## API
 
-#### `to = timeout(ms, ontimeout, [context])`
+#### `to = Timeout.once(ms, ontimeout, [context])`
 
-Make a new refreshable timeout.
+Make a new refreshable timeout that fires once.
 
 If you pass `context`, it will be set as `this` when calling `ontimeout`.
+
+#### `to = Timeout.on(ms, ontimeout, [context])`
+
+Make a new refreshable timeout that fires every `ms`.
+
+If you pass `context`, it will be set as `this` when calling `ontimeout`.
+
+#### `to.unref()`
+
+Unref the timer.
+
+#### `to.ref()`
+
+Ref the timer.
 
 #### `to.refresh()`
 
@@ -46,7 +60,7 @@ Refresh the timeout.
 
 #### `to.destroy()`
 
-Destroy the timeout. Not needed if `ontimeout` is triggered
+Destroy the timeout.
 
 ## License
 
