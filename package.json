@@ -1,6 +1,6 @@
 {
   "name": "timeout-refresh",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Efficiently refresh a timer",
   "main": "index.js",
   "dependencies": {},
