@@ -11,13 +11,9 @@ module.exports = class TimerBrowser {
       : setTimeout(callTimeout, ms, this)
   }
 
-  unref () {
-    this._timer.unref()
-  }
+  unref () {}
 
-  ref () {
-    this._timer.ref()
-  }
+  ref () {}
 
   refresh () {
     if (this.done) return
