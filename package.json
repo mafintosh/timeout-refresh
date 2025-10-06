@@ -5,7 +5,7 @@
   "main": "index.js",
   "devDependencies": {
     "prettier": "^3.6.2",
-    "prettier-config-holepunch": "^1.0.0",
+    "prettier-config-holepunch": "^2.0.0",
     "tape": "^5.5.2"
   },
   "browser": "./browser.js",
