@@ -6,9 +6,7 @@ module.exports = class Timer {
     this.interval = interval
     this.done = false
 
-    this._timer = interval
-      ? setInterval(callInterval, ms, this)
-      : setTimeout(callTimeout, ms, this)
+    this._timer = interval ? setInterval(callInterval, ms, this) : setTimeout(callTimeout, ms, this)
   }
 
   unref() {
