@@ -3,17 +3,21 @@ const tape = require('tape')
 run('', require('./'))
 run('browser: ', require('./browser'))
 
-function run (prefix, Timeout) {
+function run(prefix, Timeout) {
   tape(prefix + 'refresh', function (t) {
     let refreshing = true
     let timedout = false
 
     const ctx = {}
-    const to = Timeout.once(100, function () {
-      t.ok(ctx === this)
-      t.ok(!refreshing)
-      timedout = true
-    }, ctx)
+    const to = Timeout.once(
+      100,
+      function () {
+        t.ok(ctx === this)
+        t.ok(!refreshing)
+        timedout = true
+      },
+      ctx
+    )
 
     const i = setInterval(function () {
       to.refresh()
@@ -94,7 +98,10 @@ function run (prefix, Timeout) {
         to.destroy()
         clearInterval(i)
 
-        t.same(actual.map(n => Math.round(n / 5)), [1, 2, 4, 5])
+        t.same(
+          actual.map((n) => Math.round(n / 5)),
+          [1, 2, 4, 5]
+        )
         t.end()
       }
     })

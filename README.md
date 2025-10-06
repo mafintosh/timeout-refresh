@@ -11,7 +11,7 @@ In the browser a basic `clearTimeout + setTimeout` is used since no other method
 
 ## Usage
 
-``` js
+```js
 const Timeout = require('timeout-refresh')
 
 const to = Timeout.once(100, function () {
