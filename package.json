@@ -11,8 +11,7 @@
   "browser": "./browser.js",
   "scripts": {
     "format": "prettier --write .",
-    "lint": "prettier --check .",
-    "test": "tape test.js"
+    "test": "prettier --check . && tape test.js"
   },
   "repository": {
     "type": "git",
