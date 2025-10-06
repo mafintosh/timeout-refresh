@@ -1,49 +1,47 @@
 module.exports = class Timer {
-  constructor (ms, fn, ctx = null, interval = false) {
+  constructor(ms, fn, ctx = null, interval = false) {
     this.ms = ms
     this.ontimeout = fn
     this.context = ctx
     this.interval = interval
     this.done = false
 
-    this._timer = interval
-      ? setInterval(callInterval, ms, this)
-      : setTimeout(callTimeout, ms, this)
+    this._timer = interval ? setInterval(callInterval, ms, this) : setTimeout(callTimeout, ms, this)
   }
 
-  unref () {
+  unref() {
     this._timer.unref()
   }
 
-  ref () {
+  ref() {
     this._timer.ref()
   }
 
-  refresh () {
+  refresh() {
     if (this.done !== true) this._timer.refresh()
   }
 
-  destroy () {
+  destroy() {
     this.done = true
     this.ontimeout = null
     if (this.interval) clearInterval(this._timer)
     else clearTimeout(this._timer)
   }
 
-  static once (ms, fn, ctx) {
+  static once(ms, fn, ctx) {
     return new this(ms, fn, ctx, false)
   }
 
-  static on (ms, fn, ctx) {
+  static on(ms, fn, ctx) {
     return new this(ms, fn, ctx, true)
   }
 }
 
-function callTimeout (self) {
+function callTimeout(self) {
   self.done = true
   self.ontimeout.call(self.context)
 }
 
-function callInterval (self) {
+function callInterval(self) {
   self.ontimeout.call(self.context)
 }

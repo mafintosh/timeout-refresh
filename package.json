@@ -3,14 +3,15 @@
   "version": "2.0.1",
   "description": "Efficiently refresh a timer",
   "main": "index.js",
-  "dependencies": {},
   "devDependencies": {
-    "standard": "^16.0.4",
+    "prettier": "^3.6.2",
+    "prettier-config-holepunch": "^2.0.0",
     "tape": "^5.5.2"
   },
   "browser": "./browser.js",
   "scripts": {
-    "test": "standard && tape test.js"
+    "format": "prettier --write .",
+    "test": "prettier --check . && tape test.js"
   },
   "repository": {
     "type": "git",

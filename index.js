@@ -1,8 +1,6 @@
-module.exports = isNode()
-  ? require('./node')
-  : require('./browser')
+module.exports = isNode() ? require('./node') : require('./browser')
 
-function isNode () {
+function isNode() {
   const to = setTimeout(function () {}, 1000)
   clearTimeout(to)
   return !!to.refresh
